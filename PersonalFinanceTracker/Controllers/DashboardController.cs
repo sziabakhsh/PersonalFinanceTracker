@@ -8,9 +8,10 @@ namespace PersonalFinanceTracker.Controllers
     [Route("api/[controller]")]
     public class DashboardController : ControllerBase
     {
+        [HttpGet]
         public IActionResult Index()
         {
-            return View();
+            return Ok();
         }
     }
 }
