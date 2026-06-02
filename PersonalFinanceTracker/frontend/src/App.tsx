@@ -1,29 +1,50 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
-import Login from './pages/Login.tsx'
-import Dashboard from './pages/Dashboard.tsx'
-import Register from './pages/Register.tsx'
-import Categories from './pages/Categories.tsx'
-import Transactions from './pages/Transactions.tsx'
-import Nav from './components/Nav.tsx'
-import './App.css'
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+
+import AppLayout from "./layouts/AppLayout";
+import AuthLayout from "./layouts/AuthLayout";
+
+import Login from "./pages/Login";
+import Register from "./pages/Register";
+import Dashboard from "./pages/Dashboard";
+import Transactions from "./pages/Transactions";
+import Categories from "./pages/Categories";
+
+import ProtectedRoute from "./routes/ProtectedRoute";
+import { PublicRoute } from "./routes/PublicRoute";
 
 function App() {
   return (
-    <>
-        <Router>
-          <Nav />
-          <Routes>
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
-            <Route path="/" element={<Dashboard />} />
+    <BrowserRouter>
+      <Routes>
 
-            <Route path="/transactions" element={<Transactions />} />
-            <Route path="/categories" element={<Categories />} />
+        {/* PUBLIC (Auth Pages) */}
+        <Route
+          element={
+            <PublicRoute>
+              <AuthLayout />
+            </PublicRoute>
+          }
+        >
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+        </Route>
 
-          </Routes>
-        </Router>
-    </>
-  )
+        {/* PRIVATE (App Pages) */}
+        <Route
+          element={
+            <ProtectedRoute>
+              <AppLayout />
+            </ProtectedRoute>
+          }
+        >
+          <Route index element={<Dashboard />} />
+          <Route path="/transactions" element={<Transactions />} />
+          <Route path="/categories" element={<Categories />} />
+        </Route>
+
+      </Routes>
+    </BrowserRouter>
+  );
 }
 
-export default App
+export default App;
