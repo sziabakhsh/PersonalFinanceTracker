@@ -6,10 +6,8 @@ export default function AppLayout() {
     <div className="d-flex">
       <Nav />
 
-      <div className="flex-grow-1">
-        <div className="p-3">
-          <Outlet />
-        </div>
+      <div className="flex-grow-1 p-3 bg-light min-vh-100">
+        <Outlet />
       </div>
     </div>
   );

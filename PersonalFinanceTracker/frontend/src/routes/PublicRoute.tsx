@@ -1,15 +1,13 @@
 import { Navigate } from "react-router-dom";
+import { useContext } from "react";
+import { AccountContext } from "../context/AccountContext";
 
-type Props = {
-  children: React.ReactNode;
-};
+export function PublicRoute({ children }) {
+  const { user } = useContext(AccountContext);
 
-export function PublicRoute({ children }: Props) {
-  const token = localStorage.getItem("token");
-
-  if (token) {
+  if (user) {
     return <Navigate to="/" replace />;
   }
 
-  return <>{children}</>;
+  return children;
 }

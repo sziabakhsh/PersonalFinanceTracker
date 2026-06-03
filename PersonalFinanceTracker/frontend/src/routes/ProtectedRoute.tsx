@@ -1,15 +1,14 @@
-import { Navigate } from "react-router-dom";
+import { Navigate, Outlet, useLocation } from "react-router-dom";
+import { useContext } from "react";
+import { AccountContext } from "../context/AccountContext";
 
-type Props = {
-  children: React.ReactNode;
-};
+export default function ProtectedRoute() {
+  const { user } = useContext(AccountContext);
+  const location = useLocation();
 
-export default function ProtectedRoute({ children }: Props) {
-  const token = localStorage.getItem("token");
-
-  if (!token) {
-    return <Navigate to="/login" replace />;
+  if (!user) {
+    return <Navigate to="/login" replace state={{ from: location }} />;
   }
 
-  return <>{children}</>;
+  return <Outlet />;
 }

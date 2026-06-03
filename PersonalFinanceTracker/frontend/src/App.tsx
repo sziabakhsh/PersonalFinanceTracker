@@ -12,12 +12,11 @@ import Categories from "./pages/Categories";
 import ProtectedRoute from "./routes/ProtectedRoute";
 import { PublicRoute } from "./routes/PublicRoute";
 
-function App() {
+export default function App() {
   return (
     <BrowserRouter>
       <Routes>
 
-        {/* PUBLIC (Auth Pages) */}
         <Route
           element={
             <PublicRoute>
@@ -29,22 +28,15 @@ function App() {
           <Route path="/register" element={<Register />} />
         </Route>
 
-        {/* PRIVATE (App Pages) */}
-        <Route
-          element={
-            <ProtectedRoute>
-              <AppLayout />
-            </ProtectedRoute>
-          }
-        >
-          <Route index element={<Dashboard />} />
-          <Route path="/transactions" element={<Transactions />} />
-          <Route path="/categories" element={<Categories />} />
+        <Route element={<ProtectedRoute />}>
+          <Route element={<AppLayout />}>
+            <Route index element={<Dashboard />} />
+            <Route path="/transactions" element={<Transactions />} />
+            <Route path="/categories" element={<Categories />} />
+          </Route>
         </Route>
 
       </Routes>
     </BrowserRouter>
   );
 }
-
-export default App;
