@@ -10,22 +10,18 @@ import Transactions from "./pages/Transactions";
 import Categories from "./pages/Categories";
 
 import ProtectedRoute from "./routes/ProtectedRoute";
-import { PublicRoute } from "./routes/PublicRoute";
+import PublicRoute from "./routes/PublicRoute";
 
 export default function App() {
   return (
     <BrowserRouter>
       <Routes>
 
-        <Route
-          element={
-            <PublicRoute>
-              <AuthLayout />
-            </PublicRoute>
-          }
-        >
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
+        <Route element={<PublicRoute />}>
+          <Route element={<AuthLayout />}>
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+          </Route>
         </Route>
 
         <Route element={<ProtectedRoute />}>

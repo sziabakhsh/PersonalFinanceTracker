@@ -11,8 +11,6 @@ export default function Nav() {
     navigate("/login");
   };
 
-  console.log(user);
-
   return (
     <div className="bg-dark text-white p-3" style={{ width: "250px" }}>
       <h5>Finance App</h5>
