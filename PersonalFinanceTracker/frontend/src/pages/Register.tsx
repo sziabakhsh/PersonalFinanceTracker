@@ -1,6 +1,10 @@
 import {useForm} from 'react-hook-form'
 import * as yup from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
+import { useRegister } from '../hooks/useRegister';
+import { useContext } from 'react';
+import { AccountContext } from '../context/AccountContext';
+import { useNavigate } from 'react-router-dom';
 
 export default function Register() {
 
@@ -12,8 +16,21 @@ export default function Register() {
   })
 
   const {handleSubmit, register} = useForm({resolver:yupResolver(schema)});
+ 
+  const { mutate, isPending,isError, error } = useRegister();
+
+  const {login} = useContext(AccountContext);
+  const navigate = useNavigate();
+
   const onSubmit=(data) => {
-    console.log(data);
+    mutate(data,
+      {
+        onSuccess:(res)=>{
+          login(res);
+          navigate("/Dashboard");
+        }
+      }
+    )
   }
 
   return (
@@ -24,7 +41,7 @@ export default function Register() {
       <input type='password' placeholder='Enter password' {...register("password")} className='form-control mb-2' autoComplete='new-password'/>
       <input type='password' placeholder='Repeat password' {...register("repassword")} className='form-control mb-2' autoComplete='new-password' />
     
-      <input type='submit' className='btn btn-primary ' />
+      <input type='submit' className='btn btn-primary' disabled={isPending} />
       
     </form>
   )

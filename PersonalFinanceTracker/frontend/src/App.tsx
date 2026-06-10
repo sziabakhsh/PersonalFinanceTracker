@@ -16,14 +16,12 @@ export default function App() {
   return (
     <BrowserRouter>
       <Routes>
-
         <Route element={<PublicRoute />}>
           <Route element={<AuthLayout />}>
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
           </Route>
         </Route>
-
         <Route element={<ProtectedRoute />}>
           <Route element={<AppLayout />}>
             <Route index element={<Dashboard />} />
@@ -31,7 +29,6 @@ export default function App() {
             <Route path="/categories" element={<Categories />} />
           </Route>
         </Route>
-
       </Routes>
     </BrowserRouter>
   );
