@@ -3,11 +3,11 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import AppLayout from "./layouts/AppLayout";
 import AuthLayout from "./layouts/AuthLayout";
 
-import Login from "./pages/Login";
-import Register from "./pages/Register";
-import Dashboard from "./pages/Dashboard";
-import Transactions from "./pages/Transactions";
-import Categories from "./pages/Categories";
+import Login from "./features/account/pages/Login";
+import Register from "./features/account/pages/Register";
+import Dashboard from "./Shared/pages/Dashboard";
+import Transactions from "./features/transaction/pages/Transactions";
+import Categories from "./features/category/pages/Categories";
 
 import ProtectedRoute from "./routes/ProtectedRoute";
 import PublicRoute from "./routes/PublicRoute";

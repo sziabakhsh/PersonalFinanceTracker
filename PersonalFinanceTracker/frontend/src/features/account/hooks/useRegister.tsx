@@ -1,4 +1,4 @@
-import {registerUser} from '../api/account.tsx';
+import {registerUser} from '../api/account';
 import { useMutation } from '@tanstack/react-query';
 
 export const useRegister = () =>{

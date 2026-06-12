@@ -3,7 +3,7 @@ import * as yup from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useRegister } from '../hooks/useRegister';
 import { useContext } from 'react';
-import { AccountContext } from '../context/AccountContext';
+import { AccountContext } from '../../../context/AccountContext';
 import { useNavigate } from 'react-router-dom';
 
 export default function Register() {

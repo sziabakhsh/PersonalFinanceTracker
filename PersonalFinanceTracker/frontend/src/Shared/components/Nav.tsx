@@ -1,6 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useContext } from "react";
-import { AccountContext } from "../context/AccountContext";
+import { AccountContext } from "../../context/AccountContext";
 
 export default function Nav() {
   const { user, logout } = useContext(AccountContext);
@@ -36,9 +36,6 @@ export default function Nav() {
       </button>
     </div>
   )}
-
-
-
     </div>
   );
 }
