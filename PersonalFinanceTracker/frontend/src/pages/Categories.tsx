@@ -1,5 +1,11 @@
+import CategoryForm from "../components/CategoryForm"
+
 export default function Categories() {
+
+
   return (
-    <div>Categories</div>
+    <div>
+      <CategoryForm />
+    </div>
   )
 }
