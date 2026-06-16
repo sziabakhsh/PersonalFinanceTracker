@@ -1,6 +1,7 @@
 import {useForm} from 'react-hook-form'
 import * as yup from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup';
+import { useCreateCategory } from '../hooks/useCreateCategory';
 
 export default function CategoryForm() {
 
@@ -8,10 +9,17 @@ export default function CategoryForm() {
         name: yup.string().required()
     })
 
-  const {handleSubmit, register} = useForm({resolver:yupResolver(schema)});
+  const {handleSubmit, register ,reset} = useForm({resolver:yupResolver(schema)});
+
+  const {mutate, isError, isPending, error} = useCreateCategory();
 
   const OnSubmit=(data) => {
-    console.log(data);
+    //console.log(data);
+    mutate(data, {
+        onSuccess: ()=>{
+            reset();
+        }
+    });
   }
 
   return (

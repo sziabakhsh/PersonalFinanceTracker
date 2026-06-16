@@ -7,6 +7,7 @@ export interface CategoryRequest {
 }
 
 export interface CategoryDto {
+  id: string;
   name: string;
   type: string;
 }
@@ -16,7 +17,7 @@ export const createCategory = async (
 ): Promise<CategoryDto> => {
 
   const { data } = await api.post<CategoryDto>(
-    `category/create`,
+    `category`,
     request
   );
 

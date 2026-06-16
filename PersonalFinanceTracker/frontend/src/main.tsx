@@ -3,6 +3,7 @@ import { createRoot } from 'react-dom/client'
 import { QueryClientProvider } from '@tanstack/react-query'
 
 import './index.css'
+import 'bootstrap/dist/css/bootstrap.min.css'
 import App from './App.tsx'
 
 import { AccountContextProvider } from './context/AccountContext.tsx'
