@@ -1,4 +1,5 @@
 import api from '../../../Shared/api/api'
+import Categories from '../pages/Categories';
 
 
 export interface CategoryRequest {
@@ -45,4 +46,12 @@ export const getCategory = async (
 
 // updateCategory()
 
-// deleteCategory()
+export const deleteCategory = async (
+  id: string
+): Promise<void> => {
+
+  await api.delete(
+    `category/${id}`
+  );
+
+};

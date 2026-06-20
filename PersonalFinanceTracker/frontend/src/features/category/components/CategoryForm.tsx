@@ -1,46 +1,85 @@
-import {useForm} from 'react-hook-form'
-import * as yup from 'yup'
-import { yupResolver } from '@hookform/resolvers/yup';
-import { useCreateCategory } from '../hooks/useCreateCategory';
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
 
-export default function CategoryForm() {
+import { Button, Form, Card } from "react-bootstrap";
 
-    const schema=yup.object().shape({
-        name: yup.string().required()
-    })
+import { useCreateCategory } from "../hooks/useCreateCategory";
 
-  const {handleSubmit, register ,reset} = useForm({resolver:yupResolver(schema)});
+const schema = yup.object().shape({
+  name: yup.string().required("Name is required"),
+});
 
-  const {mutate, isError, isPending, error} = useCreateCategory();
+type FormData = {
+  name: string;
+};
 
-  const OnSubmit=(data) => {
-    //console.log(data);
+export function CategoryForm() {
+
+  const { mutate, isPending } = useCreateCategory();
+
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors }
+  } = useForm<FormData>({
+    resolver: yupResolver(schema),
+  });
+
+  const onSubmit = (data: FormData) => {
+
     mutate(data, {
-        onSuccess: ()=>{
-            reset();
-        }
+      onSuccess: () => {
+        reset(); // 👈 clear form
+      }
     });
-  }
+
+  };
 
   return (
-    <form onSubmit={handleSubmit(OnSubmit)}>
-        <div className='mb-3'>
-            <label className='form-label'>
-                Category name:
-            </label>
-             <input type='text' {...register("name")} className='form-control' />
-        </div>
-        <div className='mb-3'>
-            <label className='form-label' >Type</label>
-            <select {...register("type")} className='form-select'>
-                <option value="">Select Type</option>
-                <option value="Income">Income</option>
-                <option value="Expense">Expense</option>
-            </select>
-        </div>
-        <div className='mb-3'>
-            <input type='submit' className='btn btn-primary'  />
-        </div>
-    </form>
-  )
+    <Card>
+      <Card.Header>Add Category</Card.Header>
+
+      <Card.Body>
+
+        <Form onSubmit={handleSubmit(onSubmit)}>
+
+          <Form.Group>
+            <Form.Label>Name</Form.Label>
+
+            <Form.Control
+              {...register("name")}
+              placeholder="Enter category name"
+            />
+
+            <p className="text-danger">
+              {errors.name?.message}
+            </p>
+
+          </Form.Group>
+          <Form.Group>
+                <Form.Label>Type</Form.Label>
+                <div className='mb-3'>
+                    <select {...register("type")} className='form-select'>
+                        <option value="">Select Type</option>
+                        <option value="Income">Income</option>
+                        <option value="Expense">Expense</option>
+                    </select>
+                </div>
+            </Form.Group>
+ 
+          <Button
+            type="submit"
+            className="mt-3"
+            disabled={isPending}
+          >
+            {isPending ? "Saving..." : "Save"}
+          </Button>
+
+        </Form>
+
+      </Card.Body>
+    </Card>
+  );
 }

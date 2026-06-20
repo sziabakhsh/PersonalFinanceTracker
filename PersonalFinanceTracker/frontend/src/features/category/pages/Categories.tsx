@@ -1,29 +1,55 @@
-import {Container, Col, Row} from 'react-bootstrap'
-import CategoryForm from "../components/CategoryForm"
-import CategoryGrid from '../components/CategoryGrid'
+import { useState } from "react";
+import { Container } from "react-bootstrap";
+
+import { CategoryToolbar } from "../components/CategoryToolbar";
+import { CategoryGrid } from "../components/CategoryGrid";
+import { CategoryModal } from "../components/CategoryModal";
 
 export default function Categories() {
 
+  const [search, setSearch] =
+    useState("");
+
+  const [show, setShow] =
+    useState(false);
+
+  const [selected, setSelected] =
+    useState<any>(null);
+
+  const openCreate = () => {
+    setSelected(null);
+    setShow(true);
+  };
+
+  const openEdit = (
+    item: any
+  ) => {
+    setSelected(item);
+    setShow(true);
+  };
 
   return (
-    <Container fluid>
-            <Row className="mb-4">
-        <Col>
-          <h2>Categories</h2>
-        </Col>
-      </Row>
+    <Container className="mt-3">
 
-      <Row>
+      <CategoryToolbar
+        search={search}
+        onSearchChange={setSearch}
+        onCreate={openCreate}
+      />
 
-        <Col lg={4}>
-          <CategoryForm />
-        </Col>
+      <CategoryGrid
+        search={search}
+        onEdit={openEdit}
+      />
 
-        <Col lg={8}>
-          <CategoryGrid />
-        </Col>
+      <CategoryModal
+        show={show}
+        category={selected}
+        onClose={() =>
+          setShow(false)
+        }
+      />
 
-      </Row>
     </Container>
-  )
+  );
 }

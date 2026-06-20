@@ -1,77 +1,114 @@
-import Table from "react-bootstrap/Table";
-import Spinner from "react-bootstrap/Spinner";
-import Alert from "react-bootstrap/Alert";
-import Card from "react-bootstrap/Card";
+import { Table, Button, Card} from "react-bootstrap";
 
-import { useCategories } from "../hooks/useCategories";
+import { useCategories} from "../hooks/useCategories";
 
-export default function CategoryGrid() {
+import { useDeleteCategory } from "../hooks/useDeleteCategory"; 
 
-  const {
-    data,
-    isLoading,
-    error
-  } = useCategories();
+export function CategoryGrid({
+ search,
+ onEdit
+}: any) {
 
-  if (isLoading) {
-    return (
-      <Card>
-        <Card.Body className="text-center">
-          <Spinner />
-        </Card.Body>
-      </Card>
-    );
-  }
+ const {
+  data=[]
+ } =
+ useCategories();
 
-  if (error) {
-    return (
-      <Alert variant="danger">
-        Failed to load categories
-      </Alert>
-    );
-  }
+ const del =
+ useDeleteCategory();
 
-  if (!data?.length) {
-    return (
-      <Alert variant="info">
-        No categories found
-      </Alert>
-    );
-  }
+ const rows =
+ data.filter(x =>
+ x.name
+ .toLowerCase()
+ .includes(
+ search
+ .toLowerCase()
+ ));
 
-  return (
-    <Card>
-      <Card.Header>
-        Categories
-      </Card.Header>
-      <Card.Body>
-        <Table
-          striped
-          hover
-          responsive
-        >
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Type</th>
-            </tr>
-          </thead>
-          <tbody>
-            {data.map(category => (
-              <tr
-                key={category.id}
-              >
-                <td>
-                  {category.name}
-                </td>
-                <td>
-                  {category.type}
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </Table>
-      </Card.Body>
-    </Card>
-  );
+ return (
+
+<Card>
+
+<Card.Body>
+
+<Table hover>
+
+<thead>
+
+<tr>
+
+<th>Name</th>
+
+<th width="180">
+
+Actions
+
+</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+{
+rows.map(
+item=>(
+
+<tr
+key={item.id}
+>
+
+<td>
+
+{item.name}
+
+</td>
+
+<td>
+
+<Button
+size="sm"
+className="me-2"
+onClick={()=>
+onEdit(item)
+}
+>
+
+Edit
+
+</Button>
+
+<Button
+size="sm"
+variant="danger"
+onClick={()=>
+del.mutate(
+item.id
+)
+}
+>
+
+Delete
+
+</Button>
+
+</td>
+
+</tr>
+
+))
+
+}
+
+</tbody>
+
+</Table>
+
+</Card.Body>
+
+</Card>
+
+);
 }
